@@ -1,0 +1,13 @@
+---
+
+- hosts: homeserver
+  become: true
+  tasks:
+
+  - name: add sudoers file for jackw
+    copy:
+      src: sudoer_jackw
+      dest: /etc/sudoers.d/jackw
+      owner: root
+      group: root
+      mode: 0440
