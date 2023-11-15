@@ -2,12 +2,31 @@
 
 - hosts: homeserver
   become: true
+
+  pre_tasks:
+
+  - name: install updates (ubuntu)
+    tags: always
+    apt:
+      update_cache: yes
+    changed_when: false
+
+
   tasks:
 
-  - name: add sudoers file for jackw
-    copy:
-      src: sudoer_jackw
-      dest: /etc/sudoers.d/jackw
-      owner: root
-      group: root
-      mode: 0440
+  - name: disable dns server for pi-hole
+    service:
+      name: systemd-resolved
+      state: stopped
+
+  - name: change dns pointer
+    lineinfile:
+      path: /etc/resolv.conf
+      regexp: '^nameserver 127'
+      line: nameserver 1.1.1.1
+
+  - name: install docker
+    apt:
+      name: "docker.io"
+      state: latest
+      
