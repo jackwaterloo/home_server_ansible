@@ -27,6 +27,36 @@
 
   - name: install docker
     apt:
-      name: "docker.io"
+      name: 
+        - docker.io
+        - docker-compose
+        - python3-pip
       state: latest
-      
+
+  - name: installs python docker sdk
+    pip:
+      name: docker
+      state: latest
+
+  - name: creates portainer container
+    community.docker.docker_container:
+      name: portainer
+      image: portainer/portainer-ce:latest
+      ports:
+        - "9000:9000"
+        - "8000:8000"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - portainer_data:/data
+      restart_policy: always
+
+  - name: copy over docker compose file
+    copy:
+      src: files/compose.yml
+      dest: ~/compose.yml
+
+  - name: run pihole container with compose
+    community.docker.docker_compose:
+      project_src: ~/
+      state: present
+
