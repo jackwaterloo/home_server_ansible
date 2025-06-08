@@ -1,5 +1,5 @@
 # home_server_ansible
-Automatically provisions my ubuntu server exactly how I want it
+Automatically provisions my ubuntu server exactly how I want it. Focus is on initial setup of server and auto-setup pi-hole. Potentially will add more applications later.
 
 ## Setup on host machine
 
