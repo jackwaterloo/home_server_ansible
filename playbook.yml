@@ -50,7 +50,7 @@
         - portainer_data:/data
       restart_policy: always
 
-  - name: copy over docker compose file
+  - name: copy over docker compose file for pihole
     copy:
       src: files/compose.yml
       dest: ~/compose.yml
